@@ -14,11 +14,11 @@ services:
     networks:
       - mitchellnet
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80/alive"]
+      test: ["CMD", "/healthcheck.sh"]
       interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 15s
 
 volumes:
   vaultwarden_data:
