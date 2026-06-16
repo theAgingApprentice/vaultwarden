@@ -7,8 +7,7 @@ services:
       - .env
     environment:
       SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED:-false}
-      DOMAIN: ${DOMAIN:-https://mitchellnet.local/vault}
-      ADMIN_TOKEN: ${ADMIN_TOKEN}
+      DOMAIN: ${DOMAIN:-https://vault.mitchellnet.local}
     volumes:
       - vaultwarden_data:/data
     networks:
