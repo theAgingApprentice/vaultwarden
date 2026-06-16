@@ -1,0 +1,29 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.32.7
+    container_name: vaultwarden
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED:-false}
+      DOMAIN: ${DOMAIN:-https://mitchellnet.local/vault}
+      ADMIN_TOKEN: ${ADMIN_TOKEN}
+    volumes:
+      - vaultwarden_data:/data
+    networks:
+      - mitchellnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/alive"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  vaultwarden_data:
+    external: true
+
+networks:
+  mitchellnet:
+    external: true
