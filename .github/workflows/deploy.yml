@@ -1,0 +1,27 @@
+name: Deploy Vaultwarden
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Deploy Vaultwarden
+        run: |
+          DEPLOY_DIR="/home/andrew/services/vaultwarden"
+          mkdir -p "$DEPLOY_DIR"
+          cp docker-compose.yml "$DEPLOY_DIR/docker-compose.yml"
+          cd "$DEPLOY_DIR"
+          docker compose pull
+          docker compose up -d --remove-orphans
+          echo "Deploy complete"
+
+      - name: Health check
+        run: |
+          sleep 10
+          docker inspect --format='{{.State.Health.Status}}' vaultwarden
