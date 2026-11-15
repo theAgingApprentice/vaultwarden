@@ -3,6 +3,7 @@ services:
     image: vaultwarden/server:1.32.7
     container_name: vaultwarden
     restart: unless-stopped
+    init: true
     env_file:
       - .env
     environment:
